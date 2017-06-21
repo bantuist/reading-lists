@@ -15,7 +15,7 @@ body {
   list-style-type: none;
 }
 .col {
-  background: rgba(0, 255, 255, .1);
+  /*background: rgba(0, 255, 255, .1);*/
   border: 1px solid pink;
   flex: 1;
 }

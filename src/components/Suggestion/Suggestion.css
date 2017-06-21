@@ -1,0 +1,15 @@
+.Suggestion {
+  display: flex;
+}
+.volume-details {
+  list-style-type: none;
+  padding: 0 20px;
+  max-height: 75px;
+}
+.volume-details li {
+  line-height: 1.3;
+  width: 200px;
+}
+.Suggestion img {
+  max-height: 75px;
+}

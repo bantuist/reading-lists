@@ -1,6 +1,9 @@
+// TODO focusInputOnSuggestionClick
+// console.log(process.env.REACT_APP_GOOGLE_BOOKS_API_KEY);
 import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
-import './Search.css'
+import Suggestion from '../Suggestion/Suggestion';
+import './Search.css';
 
 /* ---------- */
 /*    Data    */
@@ -20,7 +23,6 @@ function getMatchingBooks(value, responseData) {
   const regex = new RegExp('^' + escapedValue, 'i');
   return volumes.filter(volume => {
     const { title } = volume.volumeInfo;
-    console.log(regex.test(title), title);
     return regex.test(title)
   });
 }
@@ -33,24 +35,47 @@ function getMatchingBooks(value, responseData) {
 function escapeRegexCharacters(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
-
+function getBookProps(suggestion) {
+  const { volumeInfo, saleInfo, id } = suggestion;
+  const { title, authors } = volumeInfo;
+  const amount = saleInfo.listPrice ? saleInfo.listPrice.amount : 'NOT_FOR_SALE';
+  let { imageLinks } = volumeInfo || '';
+  if (imageLinks && imageLinks.thumbnail) {
+    imageLinks = imageLinks.thumbnail;
+  }
+  // typeof imageLinks !== 'undefined'|| typeof imageLinks.thumbnail !== 'undefined'
+  return {
+    id,
+    title,
+    authors,
+    amount,
+    imageLinks
+  }
+}
+function getRequests() {
+  let requests = localStorage.getItem('requests');
+  if (typeof JSON.parse(requests) !== 'number') {
+    requests = [];
+  }
+  return requests;
+}
 /* --------------- */
 /*    Component    */
 /* --------------- */
 
 function getSuggestionValue(suggestion) {
-  return suggestion.name;
+  suggestion = getBookProps(suggestion);
+  return suggestion.title;
 }
 
 function renderSuggestion(suggestion) {
-  suggestion = suggestion.volumeInfo;
+  const bookProps = getBookProps(suggestion);
   return (
-    <span>{suggestion.title} &mdash; {suggestion.authors}</span>
+    <Suggestion suggestion={bookProps} />
   );
 }
 const baseURL = 'https://www.googleapis.com/books/v1/volumes?q=';
 // GET https://www.googleapis.com/books/v1/volumes?q=flowers+inauthor:keyes&key=AIzaSyDMQZtKd597YQ0nrtVdz6zsLB_YPzB49sU	
-
 class Search extends Component {
   constructor() {
     super();
@@ -58,15 +83,16 @@ class Search extends Component {
     this.state = {
       value: '',
       suggestions: [],
-      isLoading: false
+      isLoading: false,
+      requests: getRequests(),
     };
     
     this.lastRequestId = null;
   }
   
   loadSuggestions(value) {
-    const fetchURL = baseURL + value + '&key=AIzaSyDMQZtKd597YQ0nrtVdz6zsLB_YPzB49sU';
-
+    const fetchURL = baseURL + value + '&filter=paid-ebooks&key=AIzaSyDMQZtKd597YQ0nrtVdz6zsLB_YPzB49sU';
+    let { requests } = this.state;
     // Cancel the previous request
     if (this.lastRequestId !== null) {
       clearTimeout(this.lastRequestId);
@@ -76,14 +102,19 @@ class Search extends Component {
       isLoading: true
     });
 
-    fetch(fetchURL)
-      .then(response => response.json())
-      .then(responseData => {
-        this.setState({
-          isLoading: false,
-          suggestions: getMatchingBooks(value, responseData)
+    if (value.length > 5) {
+      fetch(fetchURL)
+        .then(response => response.json())
+        .then(responseData => {
+          this.setState({
+            isLoading: false,
+            suggestions: getMatchingBooks(value, responseData),
+            requests: requests,
+          });
         });
-      });
+      requests++;
+      localStorage.setItem('requests', requests);
+    }
   }
 
   onChange = (event, { newValue }) => {
@@ -101,7 +132,10 @@ class Search extends Component {
       suggestions: []
     });
   };
-
+  onSuggestionSelected = (event, { suggestion }) => {
+    const newBook = getBookProps(suggestion);
+    this.props.onSaveToReadingList(newBook);
+  }
   render() {
     const { value, isLoading, suggestions } = this.state;
     const inputProps = {
@@ -120,9 +154,11 @@ class Search extends Component {
           suggestions={suggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
           onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          onSuggestionSelected={this.onSuggestionSelected}
           getSuggestionValue={getSuggestionValue}
           renderSuggestion={renderSuggestion}
           inputProps={inputProps} />
+        <div>{this.state.requests}</div>
       </div>
     );
   }

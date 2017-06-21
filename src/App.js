@@ -6,15 +6,39 @@ import ReadingList from './components/ReadingList';
 // import Profile from './components/Profile';
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      readingList: [],
+    }
+
+    this.saveToReadingList = this.saveToReadingList.bind(this);
+  }
+  saveToReadingList(newBook) {
+    const { readingList } = this.state;
+    // console.log(readingList);
+    readingList.push(newBook);
+    // console.log(readingList);
+    this.setState({
+      readingList: readingList,
+    })
+    // Save to Firebase
+    console.log('Saved:', this.state.readingList);
+  }
   render() {
+    const { readingList } = this.state;
+    console.log(readingList);
     return (
       <Router>
         <div className="App">
-          <Search />
+          <Search onSaveToReadingList={this.saveToReadingList}/>
           <div className="col">
             <ul className="Nav">
               <li><Link to="/">Profile</Link></li>
-              <li><Link to="/reading-list">Reading List</Link></li>
+              <li><Link to={{
+                pathname: "/reading-list",
+                state: { readingList: readingList },
+              }}>Reading List</Link></li>
             </ul>
           </div>
 
