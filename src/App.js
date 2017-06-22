@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import base from './rebase';
 import './App.css';
 import Search from './components/Search/Search';
 import ReadingList from './components/ReadingList';
@@ -9,29 +10,27 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      readingList: [],
-    }
-
-    this.saveToReadingList = this.saveToReadingList.bind(this);
+      readingList: {},
+    };
   }
-  saveToReadingList(newBook) {
-    const { readingList } = this.state;
-    // console.log(readingList);
-    readingList.push(newBook);
-    // console.log(readingList);
-    this.setState({
-      readingList: readingList,
-    })
-    // Save to Firebase
-    console.log('Saved:', this.state.readingList);
+
+  componentWillMount() {
+    // Update local state props whenever base prop changes
+    base.bindToState('books', {
+      context: this,
+      state: 'readingList',
+      asArray: true,
+    });
+  }
+  componentWillUnmount(){
+    base.removeBinding(this.ref);
   }
   render() {
     const { readingList } = this.state;
-    console.log(readingList);
     return (
       <Router>
         <div className="App">
-          <Search onSaveToReadingList={this.saveToReadingList}/>
+          <Search readingList={readingList} />
           <div className="col">
             <ul className="Nav">
               <li><Link to="/">Profile</Link></li>

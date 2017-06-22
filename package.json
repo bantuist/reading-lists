@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "re-base": "^3.0.2",
     "react": "^15.6.1",
     "react-autosuggest": "^9.1.0",
     "react-bootstrap": "^0.31.0",

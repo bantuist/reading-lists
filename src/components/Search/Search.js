@@ -2,6 +2,7 @@
 // console.log(process.env.REACT_APP_GOOGLE_BOOKS_API_KEY);
 import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
+import base from '../../rebase';
 import Suggestion from '../Suggestion/Suggestion';
 import './Search.css';
 
@@ -52,13 +53,6 @@ function getBookProps(suggestion) {
     imageLinks
   }
 }
-function getRequests() {
-  let requests = localStorage.getItem('requests');
-  if (typeof JSON.parse(requests) !== 'number') {
-    requests = [];
-  }
-  return requests;
-}
 /* --------------- */
 /*    Component    */
 /* --------------- */
@@ -84,15 +78,37 @@ class Search extends Component {
       value: '',
       suggestions: [],
       isLoading: false,
-      requests: getRequests(),
+      requests: this.getRequests(),
     };
     
     this.lastRequestId = null;
   }
   
+  getRequests() {
+    let requests = localStorage.getItem('requests');
+    let date = localStorage.getItem('date');
+    const today = new Date().toLocaleDateString();
+    const isRequests = requests !== null;
+    console.log(requests);
+    if (!isRequests || date !== today) {
+      requests = {
+        count: 0,
+        date: today,
+      };
+    } else {
+      requests.count++;
+    }
+    this.setState({
+      requests: requests
+    })
+    localStorage.setItem('requests', requests);
+    console.log(requests);
+    return requests;
+}
   loadSuggestions(value) {
     const fetchURL = baseURL + value + '&filter=paid-ebooks&key=AIzaSyDMQZtKd597YQ0nrtVdz6zsLB_YPzB49sU';
     let { requests } = this.state;
+    requests = JSON.stringify(requests);
     // Cancel the previous request
     if (this.lastRequestId !== null) {
       clearTimeout(this.lastRequestId);
@@ -103,6 +119,8 @@ class Search extends Component {
     });
 
     if (value.length > 5) {
+      // TODO Add request count
+      localStorage.setItem('requests', requests);
       fetch(fetchURL)
         .then(response => response.json())
         .then(responseData => {
@@ -112,8 +130,6 @@ class Search extends Component {
             requests: requests,
           });
         });
-      requests++;
-      localStorage.setItem('requests', requests);
     }
   }
 
@@ -134,7 +150,14 @@ class Search extends Component {
   };
   onSuggestionSelected = (event, { suggestion }) => {
     const newBook = getBookProps(suggestion);
-    this.props.onSaveToReadingList(newBook);
+    
+    base.post(`books/${newBook.id}`, {
+      data: newBook,
+      context: this,
+      then: () => {
+        console.log('Posted to Firebase');
+      }
+    });
   }
   render() {
     const { value, isLoading, suggestions } = this.state;
@@ -143,8 +166,8 @@ class Search extends Component {
       value,
       onChange: this.onChange
     };
+    console.log(this.state);
     const status = (isLoading ? 'Loading...' : 'Type to load suggestions');
-    
     return (
       <div className="Search">
         <div className="status">
@@ -158,7 +181,7 @@ class Search extends Component {
           getSuggestionValue={getSuggestionValue}
           renderSuggestion={renderSuggestion}
           inputProps={inputProps} />
-        <div>{this.state.requests}</div>
+        <div>Google Books API: {this.state.requests.count}</div>
       </div>
     );
   }
