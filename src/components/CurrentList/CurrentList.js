@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import base from '../../rebase';
+import FontAwesome from 'react-fontawesome';
 import Search from '../Search/Search';
 import './CurrentList.css';
 
@@ -12,6 +13,7 @@ class CurrentList extends Component {
     }
     this.addBook = this.addBook.bind(this);
     this.removeBook = this.removeBook.bind(this);
+    this.updateBook = this.updateBook.bind(this);
   }
   componentWillMount() {
     const { id } = this.state.currentList;
@@ -42,6 +44,24 @@ class CurrentList extends Component {
       console.log('error', error);
     });
   }
+  updateBook(listId, book) {
+    const bookId = book.id;
+    let isRead = true;
+
+    if (book.isRead) {
+      isRead = false;
+    }
+
+    base.update(`/${listId}/books/${bookId}`, {
+      data: { isRead },
+      then(err) {
+        if (!err) {
+          console.log(`Updated ${listId} ${bookId}`);
+        }
+      }
+    });
+
+  }
   // bears endpoint currently holds the object { name: 'Bill', type: 'Grizzly' }
   
   // base.update('bears', {
@@ -60,7 +80,11 @@ class CurrentList extends Component {
       books = Object.keys(currentList.books).map(key => {
         const book = currentList.books[key];
         const listId = currentList.id;
-        const { imageLinks, title, authors, amount, id } = book;
+        const { imageLinks, title, authors, amount, id, isRead } = book;
+        let checkBook = 'check-square-o';
+        if (isRead) {
+          checkBook = 'check-square';
+        }
 
         return (
           <li className="Book-list-item" key={id}>
@@ -69,17 +93,21 @@ class CurrentList extends Component {
             </div>
             <div className="Book-details">
               <h3 className="Book-title">{title}</h3>
-              <p className="author">{authors}</p>
+              <p className="Book-author">{authors}</p>
               {typeof amount === 'number' &&
-                <p className="amount">{amount}</p>}
-              <p className="id">{id}></p>
+                <p className="Book-amount">${amount}</p>}
+              <p className="Book-id">{id}</p>
             </div>
-            <button onClick={event => this.removeBook(event, listId, id)}>X</button>
+            <FontAwesome 
+              name={checkBook}
+              onClick={() => this.updateBook(listId, book)} 
+            />
+            <button className="Book-remove" onClick={event => this.removeBook(event, listId, id)}>X</button>
           </li>
         );
       });
     }
-    console.log(currentList);
+
     return (
       <div className="Current-list">
         <Search 

@@ -50,7 +50,8 @@ function getBookProps(suggestion) {
     title,
     authors,
     amount,
-    imageLinks
+    imageLinks,
+    isRead: false,
   }
 }
 /* --------------- */
