@@ -1,24 +1,31 @@
 .Search {
+  width: 100%;
+  background-color: #fff;
+  height: 75px;
   margin: 0 auto;
 }
 .status {
   line-height: 52px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 10px;
 }
 
 .react-autosuggest__container {
   position: relative;
+  margin: 0 auto;
+  max-width: 900px;
 }
 
 .react-autosuggest__input {
-  width: 300px;
+  width: 100%;
   display: block;
-  height: 30px;
+  height: 75px;
   padding: 10px 20px;
   font-family: Helvetica, sans-serif;
   font-weight: 300;
-  font-size: 16px;
-  border: 1px solid #aaa;
-  border-radius: 4px;
+  font-size: 30px;
+  border: none;
 }
 
 .react-autosuggest__input--focused {

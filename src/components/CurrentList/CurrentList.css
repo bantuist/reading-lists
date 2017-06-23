@@ -1,0 +1,43 @@
+.Current-list {
+  display: flex;
+  flex-direction: column;
+}
+.Book-list {
+  max-width: 900px;
+  margin: 50px auto 0 auto;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  flex-wrap: wrap;
+}
+.Book-list-item {
+  position: relative;
+  margin: 10px;
+}
+.Book-list-item:hover img {
+  opacity: .25;
+}
+.Book-list-item:hover .Book-details {
+  display: block;
+}
+.image-container {
+  height: 300px;
+  width: 200px;
+  overflow: hidden;
+  border-radius: 1%;
+  box-shadow: 3px 3px 3px #777;
+}
+.Book-list-item img {
+  height: 100%;
+}
+.Book-details {
+  display: none;
+  position: absolute;
+  top: 0;
+  padding: 0 10px;
+  height: 200px;
+}
+.Book-title {
+  font-size: 14px;
+}

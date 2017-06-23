@@ -82,33 +82,33 @@ class Search extends Component {
     };
     
     this.lastRequestId = null;
+    // this.getRequests = this.getRequests.bind(this);
   }
   
   getRequests() {
     let requests = localStorage.getItem('requests');
-    let date = localStorage.getItem('date');
+    let date = JSON.parse(localStorage.getItem('date'));
     const today = new Date().toLocaleDateString();
     const isRequests = requests !== null;
-    console.log(requests);
+    // console.log(typeof requests, requests);
     if (!isRequests || date !== today) {
       requests = {
         count: 0,
         date: today,
       };
-    } else {
-      requests.count++;
-    }
+    } 
     this.setState({
       requests: requests
     })
-    localStorage.setItem('requests', requests);
-    console.log(requests);
+    localStorage.setItem('requests', JSON.stringify(requests));
+    // console.log(requests);
     return requests;
 }
   loadSuggestions(value) {
     const fetchURL = baseURL + value + '&filter=paid-ebooks&key=AIzaSyDMQZtKd597YQ0nrtVdz6zsLB_YPzB49sU';
     let { requests } = this.state;
-    requests = JSON.stringify(requests);
+    // console.log(requests);
+    // requests = JSON.stringify(requests);
     // Cancel the previous request
     if (this.lastRequestId !== null) {
       clearTimeout(this.lastRequestId);
@@ -119,8 +119,7 @@ class Search extends Component {
     });
 
     if (value.length > 5) {
-      // TODO Add request count
-      localStorage.setItem('requests', requests);
+      // localStorage.setItem('requests', requests);
       fetch(fetchURL)
         .then(response => response.json())
         .then(responseData => {
@@ -150,29 +149,20 @@ class Search extends Component {
   };
   onSuggestionSelected = (event, { suggestion }) => {
     const newBook = getBookProps(suggestion);
-    
-    base.post(`books/${newBook.id}`, {
-      data: newBook,
-      context: this,
-      then: () => {
-        console.log('Posted to Firebase');
-      }
-    });
+    const { id } = this.props.currentList;
+    this.props.onAddBook(id, newBook);
   }
   render() {
+    const { name } = this.props.currentList;
     const { value, isLoading, suggestions } = this.state;
     const inputProps = {
-      placeholder: "Enter a book title",
+      placeholder: `Add a book to ${name}`,
       value,
       onChange: this.onChange
     };
-    console.log(this.state);
-    const status = (isLoading ? 'Loading...' : 'Type to load suggestions');
+    const status = (isLoading ? 'Loading...' : 'Search for a book');
     return (
       <div className="Search">
-        <div className="status">
-          <strong>Status:</strong> {status}
-        </div>
         <Autosuggest 
           suggestions={suggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -181,7 +171,10 @@ class Search extends Component {
           getSuggestionValue={getSuggestionValue}
           renderSuggestion={renderSuggestion}
           inputProps={inputProps} />
-        <div>Google Books API: {this.state.requests.count}</div>
+        <div className="status">
+          <span style={{paddingRight: '10px'}}>Requests: {this.state.requests.count}</span>
+          {status}
+        </div>
       </div>
     );
   }

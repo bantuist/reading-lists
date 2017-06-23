@@ -1,0 +1,158 @@
+/* View List */
+.list-view {
+  color: #382110;
+  display: flex;
+  height: 75px;
+}
+.list-view:hover {
+  text-decoration: none;
+  color: #382110;
+}
+.list-view:focus {
+  outline: none;
+  text-decoration: none;
+}
+.overlay {
+  display: flex;
+}
+.update {
+  display: none;
+  background-color: #382110;
+  border: 0;
+  position: absolute;
+  top: 25px;
+  right: 0;
+  width: 50px;
+  height: 30px;
+  font-size: 16px;
+}
+.update:focus {
+  outline: none;
+}
+.update:before {
+  content: 'edit';
+
+}
+
+/* Edit List */
+.remove {
+  display: none;
+  color: #382110;
+  background-color: #F4F1EA;
+  border: 0;
+  position: absolute;
+  right: 0;
+  top: 25px;
+  width: 50px;
+  font-size: 20px;
+}
+.remove:after {
+  content: 'x';
+}
+.list-item-container:hover .update {
+  display: block;
+}
+.list-item-edit {
+  background-color: #F4F1EA;
+  color: #382110;
+  margin: 0 20px;
+  font-weight: 300;
+  font-size: 30px;
+  display: none;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border: none;
+  outline: none;
+  height: 75px;
+  width: 500px;
+}
+.list-item-edit:hover {
+  background-color: #382110;
+  color: #FFF;
+}
+.editing {
+  display: block;
+}
+.show {
+  display: block;
+  z-index: 2;
+}
+.list {
+  padding: 0;
+  font-size: 16px;
+  list-style-type: none;
+}
+.list-name {
+  width: 100%;
+  margin: 20px;
+  font-weight: 300;
+  font-size: 30px;
+  /*vertical-align: */
+}
+.list-name:focus {
+  color: #fff;
+}
+.list-item-container {
+  width: 100%;
+  margin: 0 auto;
+}
+.list-item-container:hover {
+  background-color: #382110;
+}
+.list-item-container:hover .list-view {
+  color: #FFF;
+}
+.list-item-container:hover .list-item-edit {
+  background-color: #382110;
+  color: #FFF;
+}
+.list-item-container:hover button {
+  color: #FFF;
+  background-color: #382110;
+}
+.list-item {
+  max-width: 900px;
+  margin: 0 auto;
+  color: #555;
+  position: relative;
+}
+.list-item-container:hover .remove {
+  color: #fff;
+}
+.new-list-form {
+  display: flex;
+}
+.new-list-container {
+  width: 100%;
+  background-color: #fff;
+}
+
+.new-list-input {
+  background-color: #F4F1EA;
+  background-color: #fff;
+  color: #555;
+  font-size: 30px;
+  outline: none;
+  border: 0;
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 75px;
+  max-width: 900px;
+  width: 100%;
+  display: block;
+}
+
+::-webkit-input-placeholder {
+  /*color: #382110;*/
+}
+::-webkit-input-placeholder:focus {
+  color: #fff;
+}
+.new-list-submit {
+  background-color: #FFF;
+  border: none;
+  font-size: 16px;
+  padding: 5px;
+}
+

@@ -1,23 +1,50 @@
 body {
-  font-family: Helvetica, sans-serif;
+  /*font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
+  font-weight: 300;
+	line-height: 1.4em;
+  background-color: #F4F1EA;
 }
 .App {
   display: flex;
   justify-content: center;
   flex-direction: column;
 }
-.Nav {
-  display: flex;
-  justify-content: space-between;
+h1 {
+  margin: 0;
+  color: #382110;
 }
-.Nav li {
+.nav:hover h1 {
+  color: #fff;
+}
+.nav:hover {
+  background-color: #382110;
+}
+.nav {
+  background-color: #F4F1EA;
+  /*background-color: #382110;*/
+  box-shadow: 1px 1px 5px #777;
+}
+.hovering {
+  background-color: #382110;
+}
+.nav-list {
+  padding: 0;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+}
+.nav-list li {
   display: inline;
   list-style-type: none;
+  padding: 0 10px;
+}
+.Home:hover, .Home:focus {
+  text-decoration: none;
 }
 .col {
   /*background: rgba(0, 255, 255, .1);*/
-  border: 1px solid pink;
-  flex: 1;
+  /*border: 1px solid pink;*/
+  /*flex: 1;*/
 }
 
 @media (max-width: 600px) {
