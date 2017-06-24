@@ -42,8 +42,9 @@ class Lists extends Component {
     if (!list.length) {
       const id = uuidv1();
       const createdAt = Date.now();
+      console.log(id);
       base.post(`${id}`, {
-        data: { name, id, createdAt },
+        data: { name, id, createdAt, bookCount: 0, doneCount: 0 },
         context: this,
         then: () => {
           console.log(`Posted ${id} ${name}`);

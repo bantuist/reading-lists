@@ -98,9 +98,9 @@ class Search extends Component {
         date: today,
       };
     } 
-    this.setState({
-      requests: requests
-    })
+    // this.setState({
+    //   requests: requests
+    // });
     localStorage.setItem('requests', JSON.stringify(requests));
     // console.log(requests);
     return requests;
@@ -154,7 +154,8 @@ class Search extends Component {
     this.props.onAddBook(id, newBook);
   }
   render() {
-    const { name } = this.props.currentList;
+    const { currentList } = this.props;
+    const { name, bookCount, doneCount } = currentList;
     const { value, isLoading, suggestions } = this.state;
     const inputProps = {
       placeholder: `Add a book to ${name}`,
@@ -174,6 +175,7 @@ class Search extends Component {
           inputProps={inputProps} />
         <div className="status">
           <span style={{paddingRight: '10px'}}>Requests: {this.state.requests.count}</span>
+          <span style={{paddingRight: '10px'}}>Books: {doneCount}/{bookCount} </span>
           {status}
         </div>
       </div>

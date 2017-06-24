@@ -5,18 +5,17 @@ import Search from '../Search/Search';
 import './CurrentList.css';
 
 class CurrentList extends Component {
-  constructor(props) {
-    super(props);
-    console.log(this.props.location.state.currentList);
+  constructor() {
+    super();
     this.state = {
-      currentList: this.props.location.state.currentList
+      currentList: {},
     }
     this.addBook = this.addBook.bind(this);
     this.removeBook = this.removeBook.bind(this);
     this.updateBook = this.updateBook.bind(this);
   }
   componentWillMount() {
-    const { id } = this.state.currentList;
+    const { id } = this.props.location.state.currentList;
     console.log(id);
 
     // Update local state props whenever base prop changes
@@ -27,9 +26,32 @@ class CurrentList extends Component {
     });
   }
   addBook(listId, newBook) {
-    console.log(listId, newBook);
-    base.post(`${listId}/books/${newBook.id}`, {
-      data: { ...newBook },
+    let bookId = newBook.id;
+    let { currentList } = this.state;
+    console.log(currentList);
+
+    // Make sure books isn't empty
+    let books = {};
+    if (currentList.books) {
+      books = currentList.books;
+    }
+    // Check for duplicate book before adding
+    if (books[`${bookId}`]) {
+      console.log('Already added');
+      return;
+    }
+
+    // Add new book
+    books[`${bookId}`] = newBook;
+    console.log(books);
+
+    // Update books and bookCount
+    currentList.books = books;
+    currentList.bookCount++;
+    console.log(currentList);
+
+    base.post(`${listId}`, {
+      data: currentList,
       context: this,
       then: () => {
         console.log('Posted to Firebase');
@@ -37,26 +59,39 @@ class CurrentList extends Component {
     });
   }
   removeBook(event, listId, bookId) {
-    console.log(listId, bookId);
-    base.remove(`/${listId}/books/${bookId}`).then(() => {
-      console.log('Removed from Firebase');
-    }).catch(error => {
-      console.log('error', error);
+    const { currentList } = this.state;
+    const { books } = currentList;
+    delete books[`${bookId}`];
+    currentList.bookCount--;
+
+    // vs. base.remove
+    base.post(`${listId}`, {
+      data: currentList,
+      context: this,
+      then: () => {
+        console.log('Removed book');
+      }
     });
   }
   updateBook(listId, book) {
     const bookId = book.id;
-    let isRead = true;
-
+    const { currentList } = this.state;
+    console.log(book.isRead);
     if (book.isRead) {
-      isRead = false;
+      console.log('READ');
+      currentList.books[`${bookId}`].isRead = false;
+      currentList.doneCount--;
+    } else {
+      console.log('NOT READ');
+      currentList.books[`${bookId}`].isRead = true;
+      currentList.doneCount++;
     }
 
-    base.update(`/${listId}/books/${bookId}`, {
-      data: { isRead },
+    base.update(`/${listId}`, {
+      data: currentList,
       then(err) {
         if (!err) {
-          console.log(`Updated ${listId} ${bookId}`);
+          console.log(`Updated book`);
         }
       }
     });
