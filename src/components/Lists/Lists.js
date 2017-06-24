@@ -6,6 +6,7 @@ import base from '../../rebase';
 import NewList from './../NewList';
 import EditList from './../EditList/EditList';
 import './Lists.css';
+
 class Lists extends Component {
   constructor() {
     super();

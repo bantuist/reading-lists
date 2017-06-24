@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "prop-types": "^15.5.10",
     "re-base": "^3.0.2",
     "react": "^15.6.1",
     "react-autosuggest": "^9.1.0",
