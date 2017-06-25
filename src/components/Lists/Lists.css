@@ -65,7 +65,7 @@
   border: none;
   outline: none;
   height: 75px;
-  width: 500px;
+  width: 100%;
 }
 .list-item-edit:hover {
   background-color: #382110;
@@ -142,17 +142,25 @@
   width: 100%;
   display: block;
 }
-
-::-webkit-input-placeholder {
-  /*color: #382110;*/
-}
-::-webkit-input-placeholder:focus {
-  color: #fff;
-}
 .new-list-submit {
   background-color: #FFF;
   border: none;
   font-size: 16px;
   padding: 5px;
+}
+/* Show if blank list name is submitted */
+.notify {
+  height: 20px;
+  font-size: 16px;
+  margin: 15px auto 10px auto;
+  padding: 0;
+  text-align: center;
+  color: crimson;
+  transition: opacity .1s linear;
+  opacity: 0; 
+  overflow: hidden;
+}
+.notify.blank, .notify.duplicate {
+  opacity: 1;
 }
 

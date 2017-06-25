@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import uuidv1 from 'uuid/v1';
 import { Link } from 'react-router-dom';
+import { addList, removeList, updateList } from '../modify-lists';
 import base from '../../rebase';
 import NewList from './../NewList';
-import EditList from './../EditList/EditList';
 import './Lists.css';
 
 class Lists extends Component {
@@ -13,11 +12,11 @@ class Lists extends Component {
     this.state = {
       lists: {},
       editing: false,
-      click: null,
+      notification: false,
+      message: ''
     }
+
     this.addList = this.addList.bind(this);
-    this.removeList = this.removeList.bind(this);
-    this.handleDoubleClick = this.handleDoubleClick.bind(this);
   }
   componentWillMount() {
     // Update local state props whenever base prop changes
@@ -27,90 +26,77 @@ class Lists extends Component {
       asArray: false,
     });
   }
-  // TODO
-  moveCaretAtEnd(event) {
-    var temp_value = event.target.value
-    event.target.value = ''
-    event.target.value = temp_value
-  }
+  // componentWillUnmount(){
+  //   base.removeBinding(this.ref);
+  // }
   addList(name) {
     const { lists } = this.state;
     const list = Object.keys(lists).filter((key) => {
-      const list = lists[key];
-      return list.name === name;
+      return lists[key].name === name;
     });
-    console.log(list);
-    if (!list.length) {
-      const id = uuidv1();
-      const createdAt = Date.now();
-      console.log(id);
-      base.post(`${id}`, {
-        data: { name, id, createdAt, bookCount: 0, doneCount: 0 },
-        context: this,
-        then: () => {
-          console.log(`Posted ${id} ${name}`);
-        }
-      });
+
+    if (list.length) {
+      this.setState({ notification: 'duplicate', message: 'List already exists' });
+      setTimeout(() => {
+        this.setState({ notification: false });
+      }, 2000);
+    } else if (!name) {
+      // TODO extract notifications
+      this.setState({ notification: 'blank', message: 'List name can\'t be blank' });
+      setTimeout(() => {
+        this.setState({ notification: false });
+      }, 2000);
     } else {
-      console.log('Duplicate list');
+      addList(name, this.state.lists);
+    }
+  }
+
+  // Refactor
+  updateList(event, id) {
+    const name = event.target.value;
+    if (!name) {
+      this.setState({ notification: 'blank', message: 'List name can\'t be blank' });
+      setTimeout(() => {
+        this.setState({ notification: false });
+      }, 2000);
+    } else {
+      updateList(name, id);
+      this.setState({ editing: false });
     }
   }
   removeList(id) {
-    base.remove(id).then(() => {
-      console.log(`Removed ${id}`);
-    }).catch(error => {
-      console.log('error', error);
-    });
+    removeList(id);
   }
-  // handleChange(event) {
-  //   console.log(event.target.value);
-  // }
   handleKeyDown(event, id) {
-    // const escape = 27;
     const enter = 13;
-
-    // if (event.which === escape) {
-      // this.setState({editText: this.props.todo.title});
-      // this.props.onCancel(event);
-    // } 
     if (event.which === enter) {
-      this.handleSubmit(event, id);
+      this.updateList(event, id);
     }
   }
-  handleDoubleClick(event) {
-    console.log(event);
-  }
-  handleSubmit(event, id) {
-    // event.preventDefault();
-    const name = event.target.value;
-    this.setState({ editing: false });
-
-    base.update(`${id}`, {
-      data: { name: name },
-      then(err) {
-        if (!err) {
-          console.log(`Updated ${id} ${name}`);
-        }
-      }
-    });
-  }
-  // TODO: focus editing input element
   editList(id, name) {
     this.setState({ editing: id });
-    const listNode = ReactDOM
+    let listNode = ReactDOM
       .findDOMNode(this)
       .querySelector(`.list-item-edit[data-id='${id}']`
      );
-    // this.moveCaretAtEnd(listNode);
-    // focus, select text
+    // Move cursor to end
+    // const tempValue = name;
+    listNode.value = '';
+    // listNode.value = tempValue;
+    // FIXME
+    // listNode.focus();
   }
   render() {
-    let { lists } = this.state;
+    let { lists, notification, message } = this.state;
     // Sort lists
     lists = Object.keys(this.state.lists).sort((a, b) => {
       return (lists[a]['createdAt'] < lists[b]['createdAt']);
     });
 
+    let notifyClassName = 'notify';
+    if (notification === 'duplicate' || notification === 'blank') {
+      notifyClassName += ' duplicate';
+    }
     // Map and render lists
     lists = lists.map(key => {
     const list = this.state.lists[key];
@@ -120,10 +106,15 @@ class Lists extends Component {
     const { editing } = this.state;
     let listItemEdit = 'list-item-edit';
     let removeClassName = 'remove';
+    // Refactor
     if (editing === id) {
       listItemEdit += ' editing';
       removeClassName += ' show';
+      if (notification === 'blank') {
+        notifyClassName += ' blank';
+      } 
     }
+    
       // TODO separate refs to focus input: ref={(input) => this.input = input} why doesn't this refer to a unique input in a list?
       // onChange={(event) => this.handleChange(event)}
       // state: { readingList: readingList },
@@ -138,29 +129,32 @@ class Lists extends Component {
               }}
               className='list-view'
             >
-              <h2 className="list-name">{name}</h2>
+              <h2 className="list-name">{name} ({list.bookCount})</h2>
             </Link>
               <button className="update" onClick={() => this.editList(id, name)} />
               <button className={removeClassName} onClick={() => this.removeList(id)} />
-            <EditList />
+            {/*<EditList />*/}
             <input
               autoFocus
+              placeholder="Enter a new name"
               className={listItemEdit}
-              data-id={id}
               defaultValue={name}
+              data-id={id}
               onKeyDown={(event) => this.handleKeyDown(event, id)}
               onFocus={this.moveCaretAtEnd}
-              onBlur={(event) => this.handleSubmit(event, id)}
+              onBlur={(event) => this.updateList(event, id)}
             />
           </li>
         </div>
       );
     });
 
+    console.log(notifyClassName, message);
     return (
       <div className="wrapper">
         <ul className="list">
           <NewList onAddList={this.addList}/>
+          <div className={notifyClassName}>{message}</div>
           {lists}
         </ul>
       </div>

@@ -2,7 +2,6 @@
 // console.log(process.env.REACT_APP_GOOGLE_BOOKS_API_KEY);
 import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
-import base from '../../rebase';
 import Suggestion from '../Suggestion/Suggestion';
 import './Search.css';
 

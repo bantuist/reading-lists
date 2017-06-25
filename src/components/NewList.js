@@ -19,7 +19,7 @@ class NewList extends Component {
             className="new-list-input"
             ref={(input) => this.input = input}
             type="text"
-            placeholder="Create a new list here!"
+            placeholder="Create a new list"
           />
         </form>
       </div>

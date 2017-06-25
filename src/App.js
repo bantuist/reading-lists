@@ -10,51 +10,32 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      currentList: 'Reading Lists',
-      lists: {},
-      // hovering: false,
+      currentList: 'Reading Lists'
     };
-
-    // this.handleMouseOver = this.handleMouseOver.bind(this);
-    // this.handleMouseOut = this.handleMouseOut.bind(this);
   }
 
-  componentWillMount() {
-    // Update local state props whenever base prop changes
-    base.bindToState('lists', {
-      context: this,
-      state: 'lists',
-      asArray: true,
-    });
-  }
-  componentWillUnmount(){
-    base.removeBinding(this.ref);
-  }
-  // handleMouseOver(event) {
-  //   this.setState({ hovering: true });
+  // componentWillMount() {
+  //   // Update local state props whenever Firebase props change
+  //   base.bindToState('/lists', {
+  //     context: this,
+  //     state: 'lists',
+  //     asArray: true,
+  //   });
   // }
-  // handleMouseOut() {
-  //   this.setState({ hovering: false });
-  // }
+
   render() {
-    const { list, hovering } = this.state;
-    let navClassName = 'col nav';
-    if (hovering) {
-      navClassName += ' hovering';
-    }
-
     return (
       <div>
         <Router>
           <div className="App">
-            <div className={navClassName}>
+            <div className="col nav">
               <ul className="nav-list">
                 <li>
-                  <Link className="Home" to="/">
-                    <h1 
-                      onMouseOver={this.handleMouseOver}
-                      onMouseOut={this.handleMouseOut}
-                    >{this.state.currentList}</h1>
+                  <Link className="Reading-lists" to={{
+                    pathname: "/",
+                    state: { message: 'from App.js' }
+                  }}>
+                    <h1>{this.state.currentList}</h1>
                   </Link>
                 </li>
               </ul>
