@@ -126,6 +126,8 @@
 .new-list-container {
   width: 100%;
   background-color: #fff;
+  border-top: 1px solid #382110;
+  border-bottom: 1px solid #382110;
 }
 
 .new-list-input {
@@ -150,9 +152,9 @@
 }
 /* Show if blank list name is submitted */
 .notify {
-  height: 20px;
-  font-size: 16px;
-  margin: 15px auto 10px auto;
+  height: 15px;
+  font-size: 14px;
+  margin: 10px auto;
   padding: 0;
   text-align: center;
   color: crimson;

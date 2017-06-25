@@ -38,7 +38,7 @@ h1 {
   list-style-type: none;
   padding: 0 10px;
 }
-.Home:hover, .Home:focus {
+.Reading-lists:hover, .Reading-lists:focus {
   text-decoration: none;
 }
 .col {

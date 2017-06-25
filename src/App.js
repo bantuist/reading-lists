@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import base from './rebase';
+// import base from './rebase';
 import './App.css';
 import CurrentList from './components/CurrentList/CurrentList';
-import Lists from './components/Lists/Lists';
+import ReadingLists from './components/ReadingLists/ReadingLists';
 
 class App extends Component {
   constructor() {
@@ -41,7 +40,7 @@ class App extends Component {
               </ul>
             </div>
 
-            <Route exact path="/" component={Lists} />
+            <Route exact path="/" component={ReadingLists} />
             <Route path="/current-list" component={CurrentList} />
           </div>
         </Router>

@@ -16,7 +16,7 @@ export function addList(name, lists) {
 
 export function removeList(id) {
   base.remove(id).then(() => {
-    console.log(`Removed ${id}`);
+    console.log(`Removed list`);
   }).catch(error => {
     console.log('error', error);
   });
