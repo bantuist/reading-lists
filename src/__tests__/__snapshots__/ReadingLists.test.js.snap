@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReadingLists should render ReadingLists 1`] = `
+<div
+  className="wrapper"
+>
+  <ul
+    className="list"
+  >
+    <div
+      className="new-list-container"
+    >
+      <form
+        className="new-list-form"
+        onSubmit={[Function]}
+      >
+        <input
+          className="new-list-input"
+          placeholder="Create a new list"
+          type="text"
+        />
+      </form>
+    </div>
+    <div
+      className="notify"
+    >
+      
+    </div>
+  </ul>
+</div>
+`;

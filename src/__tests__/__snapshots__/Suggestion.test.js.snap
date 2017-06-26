@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render Suggestion 1`] = `
+<div
+  className="Suggestion"
+>
+  <div
+    className="book-thumbnail-container"
+  >
+    <img
+      alt="suggestion"
+      src={undefined}
+    />
+  </div>
+  <div
+    className="book-details"
+  >
+    <div
+      className="title"
+    />
+    <div
+      className="author"
+    />
+    <div
+      className="id"
+    />
+  </div>
+</div>
+`;

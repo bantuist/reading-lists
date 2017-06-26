@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render CurrentList 1`] = `
+<div
+  className="Current-list"
+>
+  <div
+    className="Search"
+  >
+    <div
+      className="react-autosuggest__container"
+    >
+      <input
+        aria-activedescendant={null}
+        aria-autocomplete="list"
+        aria-expanded={false}
+        aria-haspopup={false}
+        aria-owns="react-autowhatever-1"
+        autoComplete="off"
+        className="react-autosuggest__input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        placeholder="Add a book to undefined"
+        role="combobox"
+        type="text"
+        value=""
+      />
+      <div
+        className="react-autosuggest__suggestions-container"
+        id="react-autowhatever-1"
+      />
+    </div>
+    <div
+      className="status"
+    >
+      <span
+        style={
+          Object {
+            "paddingRight": "10px",
+          }
+        }
+      >
+        Requests: 
+        0
+        /1000
+      </span>
+      <span
+        style={
+          Object {
+            "paddingRight": "10px",
+          }
+        }
+      >
+        Books: 
+        /
+         
+      </span>
+      Search for a book
+    </div>
+  </div>
+  <ul
+    className="Book-list"
+  />
+</div>
+`;

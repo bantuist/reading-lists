@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render CurrentListItem 1`] = `
+<li
+  className="Book-list-item"
+>
+  <div
+    className="image-container"
+  >
+    <img
+      alt="suggestion"
+      src={undefined}
+    />
+  </div>
+  <div
+    className="Book-details"
+  >
+    <h3
+      className="Book-title"
+    />
+    <p
+      className="Book-author"
+    />
+    <p
+      className="Book-id"
+    />
+  </div>
+  <span
+    aria-hidden={true}
+    className="fa fa-check-square-o"
+    onClick={[Function]}
+  />
+  <button
+    className="Book-remove"
+    onClick={[Function]}
+  >
+    X
+  </button>
+</li>
+`;

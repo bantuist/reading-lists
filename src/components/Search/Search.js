@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Autosuggest from 'react-autosuggest';
+import { getRequests, setRequests } from '../util';
 import Suggestion from '../Suggestion/Suggestion';
 import './Search.css';
 
@@ -34,7 +35,7 @@ function getMatchingBooks(value, responseData) {
 function escapeRegexCharacters(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
-function getBookProps(suggestion) {
+function _getBookProps(suggestion) {
   const { volumeInfo, saleInfo, id } = suggestion;
   const { title, authors } = volumeInfo;
   const amount = saleInfo.listPrice ? saleInfo.listPrice.amount : 'NOT_FOR_SALE';
@@ -57,14 +58,21 @@ function getBookProps(suggestion) {
 /* --------------- */
 
 function getSuggestionValue(suggestion) {
-  suggestion = getBookProps(suggestion);
+  suggestion = _getBookProps(suggestion);
   return suggestion.title;
 }
 
 function renderSuggestion(suggestion) {
-  const bookProps = getBookProps(suggestion);
+  const { imageLinks, title, authors, amount, id } = _getBookProps(suggestion);
+
   return (
-    <Suggestion suggestion={bookProps} />
+    <Suggestion 
+      imageLinks={imageLinks}
+      title={title}
+      authors={authors}
+      amount={amount}
+      id={id}
+    />
   );
 }
 const baseURL = 'https://www.googleapis.com/books/v1/volumes?q=';
@@ -77,21 +85,10 @@ class Search extends Component {
       value: '',
       suggestions: [],
       isLoading: false,
-      requests: this.getRequests(),
+      requests: getRequests(),
     };
   }
   
-  getRequests() {
-    let requests = JSON.parse(localStorage.getItem('requests'));
-    // Track daily Google Books API calls
-    if (!requests || requests.date !== new Date().toLocaleDateString()) {
-      requests = {
-        count: 0,
-        date: new Date().toLocaleDateString()
-      };
-    } 
-    return requests;
-  } 
   loadSuggestions(value) {
     const fetchURL = baseURL + value + '&filter=paid-ebooks&key=AIzaSyDMQZtKd597YQ0nrtVdz6zsLB_YPzB49sU';
     let { requests } = this.state;
@@ -113,7 +110,7 @@ class Search extends Component {
             suggestions: getMatchingBooks(value, responseData),
             requests: requests,
           });
-          localStorage.setItem('requests', JSON.stringify(requests));
+          setRequests(requests);
         });
     }
   }
@@ -134,7 +131,7 @@ class Search extends Component {
     });
   };
   onSuggestionSelected = (event, { suggestion }) => {
-    const newBook = getBookProps(suggestion);
+    const newBook = _getBookProps(suggestion);
     // const { id } = this.props.currentList;
     this.props.onAddBook(newBook);
   }

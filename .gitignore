@@ -21,3 +21,5 @@ yarn-debug.log*
 yarn-error.log*
 environment.development
 .vscode/
+jest.log.js
+todo.md

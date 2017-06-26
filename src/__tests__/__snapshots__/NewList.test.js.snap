@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render NewList 1`] = `
+<div
+  className="new-list-container"
+>
+  <form
+    className="new-list-form"
+    onSubmit={[Function]}
+  >
+    <input
+      className="new-list-input"
+      placeholder="Create a new list"
+      type="text"
+    />
+  </form>
+</div>
+`;

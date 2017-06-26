@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a snapshot 1`] = `
+<div>
+  <div
+    className="App"
+  >
+    <div
+      className="col nav"
+    >
+      <ul
+        className="nav-list"
+      >
+        <li>
+          <a
+            className="Reading-lists"
+            href="/"
+            onClick={[Function]}
+          >
+            <h1>
+              Reading Lists
+            </h1>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      className="wrapper"
+    >
+      <ul
+        className="list"
+      >
+        <div
+          className="new-list-container"
+        >
+          <form
+            className="new-list-form"
+            onSubmit={[Function]}
+          >
+            <input
+              className="new-list-input"
+              placeholder="Create a new list"
+              type="text"
+            />
+          </form>
+        </div>
+        <div
+          className="notify"
+        >
+          
+        </div>
+      </ul>
+    </div>
+  </div>
+</div>
+`;

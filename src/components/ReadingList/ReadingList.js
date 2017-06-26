@@ -2,26 +2,34 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-function handleKeyDown(props, event, id) {
+function handleKeyDown(onUpdateList, event, id) {
   // TODO: Add escape edit 
   const enter = 13;
   if (event.which === enter) {
-    props.onUpdateList(event, id);
+    onUpdateList(event, id);
   }
 }
-function ReadingList(props) {
-  let { list, editing, notification, notifyClassName } = props;
-  const { id, name } = list;
+function ReadingList({ list, notifications, onEditList, onRemoveList, onUpdateList }) {
+  let id = 'none';
+  let name = 'none';
+  let bookCount = 0;
+
+  if (list) {
+    id = list.id;
+    name = list.name;
+    bookCount = list.bookCount;
+  }
   let listItemEdit = 'list-item-edit';
   let removeClassName = 'remove';
+  // let notifyClassName = 'notify';
 
   // Toggle edit list and notifications
-  if (editing === id) {
+  if (notifications && notifications.editing === id) {
     listItemEdit += ' editing';
     removeClassName += ' show';
-    if (notification === 'blank') {
-      notifyClassName += ' blank';
-    } 
+    // if (notifications.notify === 'blank') {
+    //   notifyClassName += ' blank';
+    // } 
   }
 
   return (
@@ -34,18 +42,18 @@ function ReadingList(props) {
           }}
           className='list-view'
         >
-          <h2 className="list-name">{name} ({list.bookCount})</h2>
+          <h2 className="list-name">{name} ({bookCount})</h2>
         </Link>
-          <button className="update" onClick={() => props.onEditList(id, name)} />
-          <button className={removeClassName} onClick={() => props.onRemoveList(id)} />
+          <button className="update" onClick={() => onEditList(id, name)} />
+          <button className={removeClassName} onClick={() => onRemoveList(id)} />
         <input
           autoFocus
           placeholder="Enter a new name"
           className={listItemEdit}
           defaultValue={name}
           data-id={id}
-          onKeyDown={(event) => handleKeyDown(props, event, id)}
-          onBlur={(event) => props.onUpdateList(event, id)}
+          onKeyDown={(event) => handleKeyDown(onUpdateList, event, id)}
+          onBlur={(event) => onUpdateList(event, id)}
         />
       </li>
     </div>
@@ -69,7 +77,6 @@ ReadingList.propTypes = {
     PropTypes.bool,
     PropTypes.string
   ]),
-  notifyClassName: PropTypes.string.isRequired,
   onUpdateList: PropTypes.func.isRequired,
   onEditList: PropTypes.func.isRequired,
   onRemoveList: PropTypes.func.isRequired,

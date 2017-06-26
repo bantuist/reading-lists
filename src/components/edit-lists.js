@@ -1,12 +1,13 @@
 import base from '../rebase';
 import uuidv1 from 'uuid/v1';
 
-export function addList(name, lists) {
+export function add(name) {
   const id = uuidv1();
   const createdAt = Date.now();
+  const newList = { name, id, createdAt, bookCount: 0, doneCount: 0 };
 
   base.post(`/${id}`, {
-    data: { name, id, createdAt, bookCount: 0, doneCount: 0 },
+    data: newList,
     context: this,
     then: () => {
       console.log(`Posted new list`);
@@ -14,7 +15,7 @@ export function addList(name, lists) {
   });
 }
 
-export function removeList(id) {
+export function remove(id) {
   base.remove(id).then(() => {
     console.log(`Removed list`);
   }).catch(error => {
@@ -22,7 +23,7 @@ export function removeList(id) {
   });
 }
 
-export function updateList(name, id) {
+export function update(name, id) {
   base.update(`${id}`, {
     data: { name: name },
     then(err) {

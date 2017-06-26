@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-// import base from './rebase';
 import './App.css';
-import CurrentList from './components/CurrentList/CurrentList';
-import ReadingLists from './components/ReadingLists/ReadingLists';
+import CurrentList from '../CurrentList/CurrentList';
+import ReadingLists from '../ReadingLists/ReadingLists';
 
 class App extends Component {
   constructor() {
@@ -13,15 +12,6 @@ class App extends Component {
     };
   }
 
-  // componentWillMount() {
-  //   // Update local state props whenever Firebase props change
-  //   base.bindToState('/lists', {
-  //     context: this,
-  //     state: 'lists',
-  //     asArray: true,
-  //   });
-  // }
-
   render() {
     return (
       <div>
@@ -30,6 +20,7 @@ class App extends Component {
             <div className="col nav">
               <ul className="nav-list">
                 <li>
+                  { /* TODO: Pass history to link through state? */}
                   <Link className="Reading-lists" to={{
                     pathname: "/",
                     state: { message: 'from App.js' }

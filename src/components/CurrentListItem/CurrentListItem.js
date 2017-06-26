@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
 
-function CurrentListItem(props) {
-  const { book } = props;
+function CurrentListItem({ book = [], onUpdateBook, onRemoveBook }) {
   const { imageLinks, title, authors, amount, id, isRead } = book;
   let checkBook = 'check-square-o';
   if (isRead) {
@@ -24,11 +23,11 @@ function CurrentListItem(props) {
       </div>
       <FontAwesome 
         name={checkBook}
-        onClick={() => props.onUpdateBook(book)} 
+        onClick={() => onUpdateBook(book)} 
       />
       <button 
         className="Book-remove" 
-        onClick={() => props.onRemoveBook(id)}
+        onClick={() => onRemoveBook(id)}
         >X</button>
     </li>
   );

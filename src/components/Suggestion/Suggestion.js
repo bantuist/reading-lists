@@ -1,9 +1,7 @@
 import React from 'react';
 import './Suggestion.css';
 
-function Suggestion(props) {
-  const { imageLinks, title, authors, amount, id } = props.suggestion;
-  
+function Suggestion({ imageLinks, title, authors, amount, id }) {
   return (
     <div className="Suggestion" key={id}>
       <div className="book-thumbnail-container">
@@ -15,7 +13,6 @@ function Suggestion(props) {
         {typeof amount === 'number' &&
           <div className="amount">{amount}</div>}
         <div className="id">{id}</div>
-
       </div>
     </div>
   );

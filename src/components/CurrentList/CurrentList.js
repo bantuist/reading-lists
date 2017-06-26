@@ -6,6 +6,7 @@ import CurrentListItem from '../CurrentListItem/CurrentListItem';
 import Search from '../Search/Search';
 import './CurrentList.css';
 
+
 class CurrentList extends Component {
   constructor() {
     super();
@@ -18,7 +19,10 @@ class CurrentList extends Component {
     this.updateBook = this.updateBook.bind(this);
   }
   componentWillMount() {
-    const { id } = this.props.location.state.currentList;
+    let id = '';
+    if (this.props.location) {
+      id = this.props.location.state.currentList.id;
+    } 
 
     // Update local state props whenever base prop changes
     base.bindToState(`/${id}`, {
