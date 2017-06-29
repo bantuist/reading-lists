@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Suggestion from '../components/Suggestion/Suggestion';
+import Suggestion from './Suggestion';
 import renderer from 'react-test-renderer';
 
 it('should render Suggestion', () => {

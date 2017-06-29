@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Autosuggest from 'react-autosuggest';
-import { getRequests, setRequests } from '../util';
+import { getRequests, setRequests } from '../../utility';
+import { buildURL } from '../../api';
 import Suggestion from '../Suggestion/Suggestion';
 import './Search.css';
 
@@ -43,7 +44,7 @@ function _getBookProps(suggestion) {
   if (imageLinks && imageLinks.thumbnail) {
     imageLinks = imageLinks.thumbnail;
   }
-  // typeof imageLinks !== 'undefined'|| typeof imageLinks.thumbnail !== 'undefined'
+
   return {
     id,
     title,
@@ -75,8 +76,7 @@ function renderSuggestion(suggestion) {
     />
   );
 }
-const baseURL = 'https://www.googleapis.com/books/v1/volumes?q=';
-// GET https://www.googleapis.com/books/v1/volumes?q=flowers+inauthor:keyes&key=AIzaSyDMQZtKd597YQ0nrtVdz6zsLB_YPzB49sU	
+
 class Search extends Component {
   constructor() {
     super();
@@ -90,7 +90,8 @@ class Search extends Component {
   }
   
   loadSuggestions(value) {
-    const fetchURL = baseURL + value + '&filter=paid-ebooks&key=AIzaSyDMQZtKd597YQ0nrtVdz6zsLB_YPzB49sU';
+    const url = buildURL(value);
+
     let { requests } = this.state;
     if (this.lastRequestId !== null) {
       clearTimeout(this.lastRequestId);
@@ -102,7 +103,7 @@ class Search extends Component {
 
     if (value.length > 5) {
       requests.count++;
-      fetch(fetchURL)
+      fetch(url)
         .then(response => response.json())
         .then(responseData => {
           this.setState({
@@ -132,7 +133,6 @@ class Search extends Component {
   };
   onSuggestionSelected = (event, { suggestion }) => {
     const newBook = _getBookProps(suggestion);
-    // const { id } = this.props.currentList;
     this.props.onAddBook(newBook);
   }
   render() {
@@ -166,6 +166,7 @@ class Search extends Component {
 }
 
 Search.propTypes = {
-  onAddBook: PropTypes.func.isRequired
+  // Require?
+  onAddBook: PropTypes.func
 }
 export default Search;

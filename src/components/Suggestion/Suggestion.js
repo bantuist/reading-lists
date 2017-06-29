@@ -11,7 +11,7 @@ function Suggestion({ imageLinks, title, authors, amount, id }) {
         <div className="title">{title}</div>
         <div className="author">{authors}</div>
         {typeof amount === 'number' &&
-          <div className="amount">{amount}</div>}
+          <div className="amount">${amount}</div>}
         <div className="id">{id}</div>
       </div>
     </div>

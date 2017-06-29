@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { add, remove, update } from '../edit-lists';
-import { filterList } from '../util';
+import uuidv1 from 'uuid/v1';
+import { post, remove, update } from '../../api';
+import { filterList } from '../../utility';
 import base from '../../rebase';
 import ReadingList from '../ReadingList/ReadingList';
 import NewList from '../NewList/NewList';
 import './ReadingLists.css';
+// import sampleLists from '../../reading-list-4c03c-export';
 
 class ReadingLists extends Component {
   constructor() {
     super();
     this.state = {
       lists: {},
+      test: false,
       notifications: {
         editing: false,
         notify: false,
@@ -35,77 +38,91 @@ class ReadingLists extends Component {
   // componentWillUnmount(){
   //   base.removeBinding(this.ref);
   // }
-  addList(name) {
-    const { lists } = this.state;
-    const list = filterList(name, lists);
-
-    // Check for duplicate list and blank name before adding new list
-    if (list.length) {
-      this.setState({ 
-        notifications: { 
-          notify: 'duplicate', 
-          message: 'List already exists' 
-        } 
-      });
-      setTimeout(() => {
-        this.setState({ notifications: { notify: false } });
-      }, 2000);
-    } else if (!name) {
-      this.setState({ notifications: { notify: 'blank' , message: 'List name can\'t be blank' } });
-      setTimeout(() => {
-        this.setState({ notifications: { notify: false } });
-      }, 2000);
-    } else {
-      add(name);
-    }
-  }
-
-  // Refactor
-  updateList(event, id) {
-    console.log('update');
-    const name = event.target.value;
-
-    if (!name) {
-      this.setState({ 
-        notifications: {
-          notify: 'blank',
-          message: 'List name can\t be blank'
-        }
-      }); 
-      setTimeout(() => {
-        this.setState({ notifications: { notify: false } });
-      }, 2000);
-    } else {
-      update(name, id);
-      this.setState({ notifications: { editing: false } });
-    }
-  }
-  removeList(id) {
-    remove(id);
-  }
-  editList(id, name) {
-    this.setState({ notifications: { editing: id } });
-    let listNode = ReactDOM
-      .findDOMNode(this)
-      .querySelector(`.list-item-edit[data-id='${id}']`
-     );
-    // Move cursor to end
-    // const tempValue = name;
-    listNode.value = '';
-    // listNode.value = tempValue;
-    // FIXME
-    // TODO separate refs to focus input: ref={(input) => this.input = input} why doesn't this refer to a unique input in a list?
-    // listNode.focus();
-  }
   _sortLists(lists) {
     return Object.keys(this.state.lists).sort((a, b) => {
       return (lists[a]['createdAt'] < lists[b]['createdAt']);
     });
   }
+  _notify(type) {
+    if (type === 'blank') {
+      this.setState({ 
+        notifications: { 
+          type: 'blank' , 
+          message: 'List name can\'t be blank' 
+        } 
+      });
+      setTimeout(() => {
+        this.setState({ 
+          notifications: { 
+            type: '' 
+          } 
+        });
+        console.log('blank');
+      }, 2000);
+    } else if (type === 'duplicate') {
+      this.setState({ 
+        notifications: { 
+          type: 'duplicate', 
+          message: 'List already exists' 
+        } 
+      });
+      setTimeout(() => {
+        this.setState({ notifications: { type: '' } });
+        console.log('duplicate');
+      }, 2000); 
+    }
+  }
+  _buildList(name) {
+    const id = uuidv1();
+    const createdAt = Date.now();
+
+    return { name, id, createdAt, bookCount: 0, doneCount: 0 };
+  }
+  _checkList(name) {
+    const { lists } = this.state;
+    const currentList = filterList(name, lists);
+
+    if (!name) {
+      return this._notify('blank');
+    } else if (currentList.length) {
+      return this._notify('duplicate');
+    } else {
+      return this._buildList(name);
+    }
+  }
+  editList(id, name) {
+    this.setState({ notifications: { editing: id } });
+    let listNode = ReactDOM.findDOMNode(this).querySelector(`.list-item-edit[data-id='${id}']`);
+    listNode.value = '';
+
+    // Move cursor to end
+    // const tempValue = name;
+    // listNode.value = tempValue;
+    // FIXME
+    // TODO separate refs to focus input: ref={(input) => this.input = input} why doesn't this refer to a unique input in a list?
+    // listNode.focus();
+  }
+  addList(name) {
+    const newList = this._checkList(name);
+    console.log(newList);
+    if (newList) {
+      post(newList);
+    }
+  }
+  updateList(event, id) {
+    const name = event.target.value;
+    if (!name) return this._notify('blank');
+
+    update(name, id);
+    this.setState({ notifications: { editing: false } });
+  }
+  removeList(id) {
+    remove(id);
+  }
 
   render() {
       let { lists, notifications } = this.state;
-      let notifyClassName = 'notify';
+      let notificationClassName = 'notify';
       lists = this._sortLists(lists);
       
       // Map and render lists
@@ -126,15 +143,15 @@ class ReadingLists extends Component {
     });
 
     // New list notifications
-    if (notifications.notify === 'duplicate' || notifications.notify === 'blank') {
-      notifyClassName += ' duplicate';
+    if (notifications.type === 'duplicate' || notifications.type === 'blank') {
+      notificationClassName += ' duplicate';
     }
 
     return (
       <div className="wrapper">
         <ul className="list">
           <NewList onAddList={this.addList}/>
-          <div className={notifyClassName}>{notifications.message}</div>
+          <div className={notificationClassName}>{notifications.message}</div>
           {lists}
         </ul>
       </div>

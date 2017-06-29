@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
 import base from '../../rebase';
-import { addBook, removeBook, updateBook } from '../edit-books';
+import { post } from '../../api';
 import CurrentListItem from '../CurrentListItem/CurrentListItem';
 import Search from '../Search/Search';
 import './CurrentList.css';
@@ -31,17 +30,52 @@ class CurrentList extends Component {
       asArray: false,
     });
   }
-  addBook(newBook) {
+  _checkBook(newBook) {
     let { currentList } = this.state;
-    addBook(newBook, currentList);
+    let books = {}; // Set to empty object in case there are no books on currentList
+
+    if (currentList.books) {
+      books = currentList.books;
+    }
+
+    if (books[`${newBook.id}`]) {
+      // TODO: notify if duplicate book
+      console.log('Already added');
+      return undefined;
+    } else {
+      books[`${newBook.id}`] = newBook;
+      currentList.books = books;
+      currentList.bookCount++;
+      return currentList;
+    }
+  }
+  addBook(newBook) {
+    const updatedList = this._checkBook(newBook);
+    console.log(updatedList);
+    if (updatedList) {
+      post(updatedList);
+    }
   }
   removeBook(bookId) {
     const { currentList } = this.state;
-    removeBook(bookId, currentList);
+    const { books } = currentList;
+    delete books[`${bookId}`];
+    currentList.bookCount--;
+
+    post(currentList);
   }
   updateBook(book) {
     const { currentList } = this.state;
-    updateBook(book, currentList);
+
+    if (book.isRead) {
+      currentList.books[`${book.id}`].isRead = false;
+      currentList.doneCount--;
+    } else {
+      currentList.books[`${book.id}`].isRead = true;
+      currentList.doneCount++;
+    }
+    
+    post(currentList);
   }
 
   render() {
@@ -77,9 +111,5 @@ class CurrentList extends Component {
     );
   }
 }
-
-// CurrentList.propTypes = {
-//   id: PropTypes.string.isRequired
-// }
 
 export default CurrentList;

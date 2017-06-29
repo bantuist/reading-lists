@@ -3,17 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "normalize.css": "^7.0.0",
     "prop-types": "^15.5.10",
     "re-base": "^3.0.2",
     "react": "^15.6.1",
-    "react-autosuggest": "^9.1.0",
+    "react-autosuggest": "^9.3.1",
     "react-bootstrap": "^0.31.0",
     "react-dom": "^15.6.1",
     "react-fontawesome": "^1.6.1",
-    "react-router-dom": "^4.1.1"
+    "react-router-dom": "^4.1.1",
+    "uuid": "^3.1.0"
   },
   "devDependencies": {
+    "enzyme": "^2.9.1",
     "gh-pages": "^1.0.0",
+    "react-addons-test-utils": "^15.6.0",
     "react-scripts": "1.0.7",
     "react-test-renderer": "^15.6.1"
   },
@@ -22,6 +26,18 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "deploy": "gh-pages -d build"
-  }
+    "deploy": "ns --cmd 'list ./content -s'"
+  },
+  "description": "## Todo - Add [React DnD](https://github.com/react-dnd/react-dnd): Drag and drop for React - Dynamic URIs - Improve search results",
+  "main": "jest.log.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bantuist/apprenticeship-challenge.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bantuist/apprenticeship-challenge/issues"
+  },
+  "homepage": "https://github.com/bantuist/apprenticeship-challenge#readme"
 }

@@ -1,0 +1,160 @@
+{
+  "40651a30-5aa9-11e7-9e9a-359fce07da8f" : {
+    "bookCount" : 3,
+    "books" : {
+      "FmyBAwAAQBAJ" : {
+        "amount" : 16.99,
+        "authors" : [ "Yuval Noah Harari" ],
+        "id" : "FmyBAwAAQBAJ",
+        "imageLinks" : "http://books.google.com/books/content?id=FmyBAwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "isRead" : false,
+        "title" : "Sapiens"
+      },
+      "LWNQ2_4wkocC" : {
+        "amount" : 10.99,
+        "authors" : [ "Will Durant", "Ariel Durant" ],
+        "id" : "LWNQ2_4wkocC",
+        "imageLinks" : "http://books.google.com/books/content?id=LWNQ2_4wkocC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "isRead" : false,
+        "title" : "The Lessons of History"
+      },
+      "WZ9HDAAAQBAJ" : {
+        "amount" : 10.99,
+        "authors" : [ "Richard Dawkins" ],
+        "id" : "WZ9HDAAAQBAJ",
+        "imageLinks" : "http://books.google.com/books/content?id=WZ9HDAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "isRead" : false,
+        "title" : "The Selfish Gene"
+      }
+    },
+    "createdAt" : 1498506863443,
+    "doneCount" : 0,
+    "id" : "40651a30-5aa9-11e7-9e9a-359fce07da8f",
+    "name" : "Science and History"
+  },
+  "47ef9490-589e-11e7-9e69-31e4ad989967" : {
+    "bookCount" : 1,
+    "books" : {
+      "ZFPXNNtVYF0C" : {
+        "amount" : 10.99,
+        "authors" : [ "A.A. Milne" ],
+        "id" : "ZFPXNNtVYF0C",
+        "imageLinks" : "http://books.google.com/books/content?id=ZFPXNNtVYF0C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "isRead" : true,
+        "title" : "Winnie the Pooh"
+      }
+    },
+    "createdAt" : 1498282249305,
+    "doneCount" : 3,
+    "id" : "47ef9490-589e-11e7-9e69-31e4ad989967",
+    "name" : "Children's books"
+  },
+  "e8c673a0-5913-11e7-a728-d7c564a97e24" : {
+    "bookCount" : 3,
+    "books" : {
+      "3_bJKlAOecEC" : {
+        "amount" : 9.99,
+        "authors" : [ "Iain M. Banks" ],
+        "id" : "3_bJKlAOecEC",
+        "imageLinks" : "http://books.google.com/books/content?id=3_bJKlAOecEC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "isRead" : false,
+        "title" : "Consider Phlebas"
+      },
+      "IwywDY4P6gsC" : {
+        "amount" : 7.99,
+        "authors" : [ "Isaac Asimov" ],
+        "id" : "IwywDY4P6gsC",
+        "imageLinks" : "http://books.google.com/books/content?id=IwywDY4P6gsC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "isRead" : false,
+        "title" : "Foundation"
+      },
+      "nPF9n0SwstMC" : {
+        "amount" : 5.99,
+        "authors" : [ "Pierce Brown" ],
+        "id" : "nPF9n0SwstMC",
+        "imageLinks" : "http://books.google.com/books/content?id=nPF9n0SwstMC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "isRead" : false,
+        "title" : "Red Rising"
+      }
+    },
+    "createdAt" : 1498332770266,
+    "doneCount" : 0,
+    "id" : "e8c673a0-5913-11e7-a728-d7c564a97e24",
+    "name" : "Sci-fi"
+  },
+  "ea559f20-5913-11e7-a728-d7c564a97e24" : {
+    "bookCount" : 1,
+    "books" : {
+      "BQxZsou-RdwC" : {
+        "amount" : 7.99,
+        "authors" : [ "Carl Sagan" ],
+        "id" : "BQxZsou-RdwC",
+        "imageLinks" : "http://books.google.com/books/content?id=BQxZsou-RdwC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "isRead" : false,
+        "title" : "Dragons of Eden"
+      }
+    },
+    "createdAt" : 1498332772882,
+    "doneCount" : 0,
+    "id" : "ea559f20-5913-11e7-a728-d7c564a97e24",
+    "name" : "Fantasy"
+  },
+  "eef1e390-5913-11e7-a728-d7c564a97e24" : {
+    "bookCount" : 4,
+    "books" : {
+      "4QTzCAAAQBAJ" : {
+        "amount" : 15.99,
+        "authors" : [ "Cal Newport" ],
+        "id" : "4QTzCAAAQBAJ",
+        "imageLinks" : "http://books.google.com/books/content?id=4QTzCAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "isRead" : true,
+        "title" : "Deep Work"
+      },
+      "LxZiUSuVIgcC" : {
+        "amount" : 17.99,
+        "authors" : [ "Robert Greene" ],
+        "id" : "LxZiUSuVIgcC",
+        "imageLinks" : "http://books.google.com/books/content?id=LxZiUSuVIgcC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "isRead" : true,
+        "title" : "Mastery"
+      },
+      "rB2ZDQAAQBAJ" : {
+        "amount" : 23.99,
+        "authors" : [ "Gary Keller", "Jay Papasan" ],
+        "id" : "rB2ZDQAAQBAJ",
+        "imageLinks" : "http://books.google.com/books/content?id=rB2ZDQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "isRead" : true,
+        "title" : "The ONE Thing"
+      },
+      "udApd8ZGlV0C" : {
+        "amount" : 11.27,
+        "authors" : [ "Marcus Aurelius" ],
+        "id" : "udApd8ZGlV0C",
+        "imageLinks" : "http://books.google.com/books/content?id=udApd8ZGlV0C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "isRead" : false,
+        "title" : "Meditations"
+      }
+    },
+    "createdAt" : 1498332780617,
+    "doneCount" : 4,
+    "id" : "eef1e390-5913-11e7-a728-d7c564a97e24",
+    "name" : "Fundamentals"
+  },
+  "fc383b20-5d06-11e7-beb5-4d467c8c46f1" : {
+    "bookCount" : 1,
+    "books" : {
+      "pm4nVCg3Gi0C" : {
+        "amount" : 4.99,
+        "authors" : [ "Kate Darcy" ],
+        "id" : "pm4nVCg3Gi0C",
+        "imageLinks" : "http://books.google.com/books/content?id=pm4nVCg3Gi0C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        "isRead" : false,
+        "title" : "Winnie Windmill"
+      }
+    },
+    "createdAt" : 1498767024082,
+    "doneCount" : 0,
+    "id" : "fc383b20-5d06-11e7-beb5-4d467c8c46f1",
+    "name" : "A"
+  }
+}

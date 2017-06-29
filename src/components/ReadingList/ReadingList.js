@@ -21,15 +21,11 @@ function ReadingList({ list, notifications, onEditList, onRemoveList, onUpdateLi
   }
   let listItemEdit = 'list-item-edit';
   let removeClassName = 'remove';
-  // let notifyClassName = 'notify';
 
-  // Toggle edit list and notifications
+  // Toggle list editing and notifications
   if (notifications && notifications.editing === id) {
     listItemEdit += ' editing';
     removeClassName += ' show';
-    // if (notifications.notify === 'blank') {
-    //   notifyClassName += ' blank';
-    // } 
   }
 
   return (
@@ -67,19 +63,20 @@ ReadingList.propTypes = {
     createdAt: PropTypes.number.isRequired,
     bookCount: PropTypes.number.isRequired,
     doneCount: PropTypes.number.isRequired,
-    books: PropTypes.object
+    books: PropTypes.object,
   }),
   editing: PropTypes.oneOfType([
     PropTypes.bool,
-    PropTypes.string
+    PropTypes.string,
   ]),
   notification: PropTypes.oneOfType([
     PropTypes.bool,
-    PropTypes.string
+    PropTypes.string,
   ]),
-  onUpdateList: PropTypes.func.isRequired,
-  onEditList: PropTypes.func.isRequired,
-  onRemoveList: PropTypes.func.isRequired,
+  // Require?
+  onUpdateList: PropTypes.func,
+  onEditList: PropTypes.func,
+  onRemoveList: PropTypes.func,
 };
 
 export default ReadingList;
