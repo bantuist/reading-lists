@@ -7,7 +7,7 @@ export function buildURL(value) {
   return baseURL + value + '&filter=paid-ebooks&key=AIzaSyDMQZtKd597YQ0nrtVdz6zsLB_YPzB49sU';
 }
 
-// Firebase lists
+// Firebase
 export function post(newList) {
   base.post(`/${newList.id}`, {
     data: newList,
@@ -26,8 +26,8 @@ export function remove(id) {
   });
 }
 
-export function update(name, list) {
-  base.update(`${list.id}`, {
+export function update(name, listID) {
+  base.update(`${listID}`, {
     data: { name: name },
     then(err) {
       if (!err) {

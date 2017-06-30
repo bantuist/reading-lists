@@ -4,7 +4,6 @@ function NewList(props) {
   function addList(event) {
     event.preventDefault();
     const name = inputRef.value;
-
     props.onAddList(name);
     inputRef.value = '';
   }

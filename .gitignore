@@ -21,4 +21,4 @@ yarn-debug.log*
 yarn-error.log*
 environment.development
 .vscode/
-todo.md
+notes.md

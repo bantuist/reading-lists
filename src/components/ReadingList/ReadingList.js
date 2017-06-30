@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 function handleKeyDown(onUpdateList, event, id) {
   // TODO: Add escape edit 
   const enter = 13;
-  if (event.which === enter) {
+  if (event.which === enter && event.target.value !== '') {
     onUpdateList(event, id);
   }
 }

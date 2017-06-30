@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import uuidv1 from 'uuid/v1';
 import { post, remove, update } from '../../api';
-import { filterList } from '../../utility';
+import { filterList, buildList } from '../../utility';
 import base from '../../rebase';
 import ReadingList from '../ReadingList/ReadingList';
 import NewList from '../NewList/NewList';
 import './ReadingLists.css';
-// import sampleLists from '../../reading-list-4c03c-export';
+// import sampleLists from '../../sample-lists';
 
 class ReadingLists extends Component {
   constructor() {
@@ -72,12 +71,6 @@ class ReadingLists extends Component {
       }, 2000); 
     }
   }
-  _buildList(name) {
-    const id = uuidv1();
-    const createdAt = Date.now();
-
-    return { name, id, createdAt, bookCount: 0, doneCount: 0 };
-  }
   _checkList(name) {
     const { lists } = this.state;
     const currentList = filterList(name, lists);
@@ -87,7 +80,7 @@ class ReadingLists extends Component {
     } else if (currentList.length) {
       return this._notify('duplicate');
     } else {
-      return this._buildList(name);
+      return buildList(name);
     }
   }
   editList(id, name) {
@@ -99,7 +92,6 @@ class ReadingLists extends Component {
     // const tempValue = name;
     // listNode.value = tempValue;
     // FIXME
-    // TODO separate refs to focus input: ref={(input) => this.input = input} why doesn't this refer to a unique input in a list?
     // listNode.focus();
   }
   addList(name) {
@@ -112,7 +104,6 @@ class ReadingLists extends Component {
   updateList(event, id) {
     const name = event.target.value;
     if (!name) return this._notify('blank');
-
     update(name, id);
     this.setState({ notifications: { editing: false } });
   }

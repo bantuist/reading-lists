@@ -5,25 +5,31 @@ exports[`renders a snapshot 1`] = `
   <div
     className="App"
   >
-    <div
-      className="col nav"
+    <a
+      className="Reading-lists"
+      href="/"
+      onClick={[Function]}
     >
-      <ul
-        className="nav-list"
+      <div
+        className="col nav"
       >
-        <li>
-          <a
-            className="Reading-lists"
-            href="/"
-            onClick={[Function]}
-          >
-            <h1>
-              Reading Lists
-            </h1>
-          </a>
-        </li>
-      </ul>
-    </div>
+        <ul
+          className="nav-list"
+        >
+          <li>
+            <div
+              className="header"
+            >
+              <h1
+                className="title"
+              >
+                Reading Lists
+              </h1>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </a>
     <div
       className="wrapper"
     >

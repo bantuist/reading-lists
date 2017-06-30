@@ -1,7 +1,14 @@
-# Reading List
+# [Reading Lists](https://build-kkvudsgkfe.now.sh/)
+
+## Features
+- Create and edit reading lists
+- Add books from Google Books
+- Search with autosuggest
+- Firebase storage
 
 ## Todo
-- Add [React DnD](https://github.com/react-dnd/react-dnd): Drag and drop for React
+- Add React drag and drop for React
 - Dynamic URIs
-- Improve search results
+- Improve search autosuggest
+- Mock firebase calls with Jest
 

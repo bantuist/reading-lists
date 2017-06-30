@@ -5,7 +5,6 @@ import CurrentListItem from '../CurrentListItem/CurrentListItem';
 import Search from '../Search/Search';
 import './CurrentList.css';
 
-
 class CurrentList extends Component {
   constructor() {
     super();
@@ -51,7 +50,6 @@ class CurrentList extends Component {
   }
   addBook(newBook) {
     const updatedList = this._checkBook(newBook);
-    console.log(updatedList);
     if (updatedList) {
       post(updatedList);
     }
@@ -61,6 +59,7 @@ class CurrentList extends Component {
     const { books } = currentList;
     delete books[`${bookId}`];
     currentList.bookCount--;
+    currentList.doneCount--;
 
     post(currentList);
   }
