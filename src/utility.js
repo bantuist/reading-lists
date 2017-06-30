@@ -19,7 +19,6 @@ export function getRequests() {
 } 
 
 export function setRequests(requests) {
-  console.log(localStorage);
   localStorage.setItem('requests', JSON.stringify(requests));
 }
 

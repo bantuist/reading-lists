@@ -12,9 +12,10 @@ body {
 .header {
   margin: 25px;
 }
-.title {
+.header .title {
   margin: 0;
   color: #382110;
+  font-size: 3em;
 }
 .nav:hover h1 {
   color: #fff;

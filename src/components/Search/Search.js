@@ -24,6 +24,7 @@ function getMatchingBooks(value, responseData) {
   const regex = new RegExp('^' + escapedValue, 'i');
   return volumes.filter(volume => {
     const { title } = volume.volumeInfo;
+    // TODO: Add match author
     return regex.test(title)
   });
 }
@@ -137,14 +138,15 @@ class Search extends Component {
   }
   render() {
     const { currentList } = this.props;
-    const { name, bookCount, doneCount } = currentList;
+    const { bookCount, doneCount } = currentList;
+    let name = currentList.name || '...';
     const { value, isLoading, suggestions } = this.state;
     const inputProps = {
       placeholder: `Add a book to ${name}`,
       value,
       onChange: this.onChange
     };
-    const status = (isLoading ? 'Loading...' : 'Search for a book');
+    const status = (isLoading ? 'Loading...' : 'Search for a book by title');
     return (
       <div className="Search">
         <Autosuggest 

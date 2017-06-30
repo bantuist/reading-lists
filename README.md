@@ -1,4 +1,4 @@
-# [Reading Lists](https://build-kkvudsgkfe.now.sh/)
+# [Reading Lists](https://build-mzqtetjwen.now.sh/)
 
 ## Features
 - Create and edit reading lists

@@ -4,7 +4,7 @@ import base from './rebase';
 const baseURL = 'https://www.googleapis.com/books/v1/volumes?q=';
 // GET https://www.googleapis.com/books/v1/volumes?q=flowers+inauthor:keyes&key=AIzaSyDMQZtKd597YQ0nrtVdz6zsLB_YPzB49sU	
 export function buildURL(value) {
-  return baseURL + value + '&filter=paid-ebooks&key=AIzaSyDMQZtKd597YQ0nrtVdz6zsLB_YPzB49sU';
+  return baseURL + value + `&filter=paid-ebooks&key=${process.env.REACT_APP_GOOGLE_BOOKS}`;
 }
 
 // Firebase
